@@ -1,10 +1,12 @@
 import { Router } from "express";
-import { getProducts } from "../controllers/products-controller.js";
+import {
+    getProducts,
+    postProduct,
+} from "../controllers/products-controller.js";
+import { validateSchema } from "../middlewares/validate-joi-schema.js";
+import { NewProductSchema } from "../schemas/new-product.js";
 
 export const ProductsRouter = Router();
 
-ProductsRouter.get("/products", async (req, res) => {
-    const products = await getProducts(req, res);
-
-    res.status(200).json(products);
-});
+ProductsRouter.get("/products", getProducts);
+ProductsRouter.post("/products", validateSchema(NewProductSchema), postProduct);
