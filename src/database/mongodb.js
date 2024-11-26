@@ -1,12 +1,12 @@
-import { MongoClient } from 'mongodb';
-import dotenv from 'dotenv';
+import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
 dotenv.config();
 
 const MONGO = process.env.MONGO_CONNECTION;
 
 // Conexão com o banco de dados
-const mongoClient = new MongoClient(MONGO)
+const mongoClient = new MongoClient(MONGO);
 await mongoClient.connect();
 
-const db = mongoClient.db("nome_do_db")
+const db = mongoClient.db("supermercado");
 export default db;
