@@ -13,3 +13,15 @@ export async function postProduct(req, res) {
 
     res.sendStatus(201);
 }
+
+export async function getProductById(req, res) {
+    const { id } = req.params;
+
+    const product = await db.collection("products").findOne({ id });
+
+    if (!product) {
+        return res.sendStatus(404);
+    }
+
+    res.status(200).json(product);
+}
