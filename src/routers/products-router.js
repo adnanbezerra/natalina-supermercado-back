@@ -9,4 +9,4 @@ import { NewProductSchema } from "../schemas/new-product.js";
 export const ProductsRouter = Router();
 
 ProductsRouter.get("/products", getProducts);
-ProductsRouter.post("/products", validateSchema(NewProductSchema), postProduct);
+ProductsRouter.post("/product", validateSchema(NewProductSchema), postProduct);
