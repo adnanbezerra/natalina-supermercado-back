@@ -4,11 +4,13 @@ import {
     getProducts,
     postProduct,
 } from "../controllers/products-controller.js";
-import { validateSchema } from "../middlewares/validate-joi-schema.js";
-import { NewProductSchema } from "../schemas/new-product.js";
+import multer from "multer";
 
 export const ProductsRouter = Router();
 
-ProductsRouter.get("/products", getProducts);
-ProductsRouter.post("/product", validateSchema(NewProductSchema), postProduct);
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+ProductsRouter.get("/product", getProducts);
+ProductsRouter.post("/product", upload.single("image"), postProduct);
 ProductsRouter.get("/product/:id", getProductById);

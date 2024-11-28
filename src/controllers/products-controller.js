@@ -1,7 +1,8 @@
-import db from "../database/mongodb.js";
+import { Product } from "../models/product/index.js";
+import { createProduct } from "../service/create-product.js";
 
 export async function getProducts(req, res) {
-    const products = await db.collection("products").find().toArray();
+    const products = await Product.find();
 
     res.status(200).json(products);
 }
@@ -9,7 +10,13 @@ export async function getProducts(req, res) {
 export async function postProduct(req, res) {
     const newProduct = req.body;
 
-    await db.collection("products").insertOne(newProduct);
+    const file = req.file;
+    try {
+        await createProduct(newProduct, file);
+    } catch (error) {
+        res.status(500).json({ error });
+        return;
+    }
 
     res.sendStatus(201);
 }
@@ -17,7 +24,7 @@ export async function postProduct(req, res) {
 export async function getProductById(req, res) {
     const { id } = req.params;
 
-    const product = await db.collection("products").findOne({ id });
+    const product = await getProductById(id);
 
     if (!product) {
         return res.sendStatus(404);
