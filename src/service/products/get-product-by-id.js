@@ -1,5 +1,5 @@
-import { Image } from "../models/image/index.js";
-import Product from "../models/product/index.js";
+import { Image } from "../../models/image/index.js";
+import Product from "../../models/product/index.js";
 
 export async function getProductById(id) {
     const product = await Product.findById(id);

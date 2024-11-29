@@ -1,5 +1,5 @@
 import { Product } from "../models/product/index.js";
-import { createProduct } from "../service/create-product.js";
+import { createProduct } from "../service/products/create-product.js";
 
 export async function getProducts(req, res) {
     const products = await Product.find();
