@@ -3,12 +3,6 @@ import {
     getProductById,
     getProducts,
     postProduct,
-    addPromotion,
-    updateProduct,
-    deleteProduct,
-    deletePromotion,
-    editPromotion
-
 } from "../controllers/products-controller.js";
 import multer from "multer";
 import { addPromotion } from "../controllers/add-promotion-controller.js";
@@ -16,7 +10,6 @@ import { editPromotion } from "../controllers/edit-promotion-controller.js";
 import { deletePromotion } from "../controllers/delete-promotion-controller.js";
 import { updateProduct } from "../controllers/edit-product-controller.js";
 import { deleteProduct } from "../controllers/delete-product-controller.js";
-
 
 export const ProductsRouter = Router();
 
