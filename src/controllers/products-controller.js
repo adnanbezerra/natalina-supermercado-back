@@ -1,5 +1,6 @@
 import { Product } from "../models/product/index.js";
 import { createProduct } from "../service/products/create-product.js";
+import { getProductByIdService } from "../service/products/get-product-by-id.js";
 import { fetchProductsService } from "../service/products/get-products.js";
 
 export async function getProducts(req, res) {
@@ -23,9 +24,9 @@ export async function postProduct(req, res) {
 }
 
 export async function getProductById(req, res) {
-    const { id } = req.params;
-
-    const product = await getProductById(id);
+    const { uuid } = req.params;
+    
+    const product = await getProductByIdService(uuid);
 
     if (!product) {
         return res.sendStatus(404);
