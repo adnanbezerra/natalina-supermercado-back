@@ -1,3 +1,4 @@
+import { Image } from "../models/image/index.js";
 import { Product } from "../models/product/index.js";
 
 export async function deleteProduct(req, res) {
@@ -5,7 +6,11 @@ export async function deleteProduct(req, res) {
 
     try {
         const product = await Product.findByIdAndDelete(id);
+        const image = await Image.findByIdAndDelete(product.image);
         if (!product) {
+            return res.sendStatus(404);
+        }
+        if (!image) {
             return res.sendStatus(404);
         }
 
