@@ -3,7 +3,6 @@ import { Product } from "../../models/product/index.js";
 
 async function saveImage(name, file) {
     if (!file) {
-        // Se nenhum arquivo for enviado, não salva nenhuma imagem
         return null;
     }
 
@@ -31,7 +30,7 @@ export async function createProduct(productData, file) {
         const newProduct = new Product({
             name,
             price,
-            image: savedImage ? savedImage._id : null, // Corrigido aqui
+            image: savedImage ? savedImage._id : null,
         });
 
         return await newProduct.save();

@@ -1,4 +1,4 @@
-import { editUser } from "../../services/user/edit-user.js";
+import { editUser } from "../service/user/edit-user.js";
 
 export async function editUserController(req, res) {
     const { id } = req.params;

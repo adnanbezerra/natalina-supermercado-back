@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { ProductsRouter } from "./routers/products-router.js";
-import { UsersRouter } from "./routers/users-router.js";
+import { UsersRouter } from "./routers/users-routers.js";
 dotenv.config();
 
 const PORT = process.env.PORT;

@@ -11,7 +11,7 @@ export async function getProductByIdService(id) {
     const image = await Image.findById(product.image);
 
     if (!image) {
-        return res.status(404).send("Imagem não encontrada");
+        return product;
     }
 
     const base64Image = image.img.data.toString("base64");

@@ -6,6 +6,11 @@ export async function fetchProductsService() {
     const productsWithImages = [];
 
     for (const product of products) {
+        if (!product.image) {
+            productsWithImages.push(product);
+            continue;
+        }
+
         const image = await Image.findById(product.image);
 
         const base64Image = image.img.data.toString("base64");

@@ -1,4 +1,4 @@
-import { deleteUser } from "../../services/user/delete-user.js";
+import { deleteUser } from "../service/user/delete-user.js";
 
 export async function deleteUserController(req, res) {
     const { id } = req.params;

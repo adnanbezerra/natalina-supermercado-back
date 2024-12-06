@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { cadastroUser } from "../controllers/user/cadastro-user-controller.js";
-import { deleteUserController } from "../controllers/user/delete-user-controller.js";
-import { editUserController } from "../controllers/user/edit-user-controller.js";
-import { loginUserController } from "../controllers/user/login-user-controller.js";
+import { cadastroUser } from "../controllers/cadastro-user-controller.js";
+import { deleteUserController } from "../controllers/delete-user-controller.js";
+import { editUserController } from "../controllers/edit-user-controller.js";
+import { loginUserController } from "../controllers/login-user-controller.js";
 
 export const UsersRouter = Router();
 
