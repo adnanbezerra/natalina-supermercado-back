@@ -2,6 +2,11 @@ import { Image } from "../../models/image/index.js";
 import { Product } from "../../models/product/index.js";
 
 async function saveImage(name, file) {
+    if (!file) {
+        // Se nenhum arquivo for enviado, não salva nenhuma imagem
+        return null;
+    }
+
     const newImage = new Image({
         name,
         img: {
@@ -16,13 +21,17 @@ async function saveImage(name, file) {
 export async function createProduct(productData, file) {
     const { name, price } = productData;
 
+    if (!name || !price) {
+        throw new Error("Os campos 'name' e 'price' são obrigatórios.");
+    }
+
     try {
         const savedImage = await saveImage(name, file);
 
         const newProduct = new Product({
             name,
             price,
-            image: savedImage._id,
+            image: savedImage ? savedImage._id : null, // Corrigido aqui
         });
 
         return await newProduct.save();
