@@ -6,7 +6,6 @@ export async function addPromotion(productId, promotionData) {
         if (!product) {
             throw new Error("Produto não encontrado");
         }
-
         product.promotion = promotionData; 
         return await product.save();
     } catch (error) {
