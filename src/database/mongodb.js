@@ -19,3 +19,4 @@ const connectDB = async () => {
 };
 
 export const mongoConnection = await connectDB();
+export default mongoConnection;
