@@ -1,39 +1,54 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import db from "../database/mongodb.js";
+import { mongoConnection } from "../database/mongodb.js";
+import { ObjectId } from "mongodb"; 
 
 dotenv.config();
 
 export async function validatingToken(req, res, next) {
     try {
+        // Obtendo o token do header de autorização
         const { authorization } = req.headers;
-        if (!authorization) {
-            return res.status(401).send("Token não fornecido.");
-        }
+        const token = authorization?.replace("Bearer ", "");
 
-        const token = authorization.replace("Bearer ", "");
         if (!token) {
-            return res.status(401).send("Token inválido ou ausente.");
+            return res.status(401).send("Token não fornecido");
         }
 
-        // Verifica o token JWT
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        if (!decoded || !decoded.id) {
-            return res.status(401).send("Token inválido.");
+        // Verificando e decodificando o token
+        const data = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!data || !data.id) {
+            return res.status(401).send("Token inválido");
         }
 
-        // Busca o usuário no banco de dados
-        const user = await db.collection("users").findOne({ _id: decoded.id });
+        // Validando o formato do ID
+        if (!ObjectId.isValid(data.id)) {
+            return res.status(400).send("ID do usuário inválido no token");
+        }
+
+        // Buscando o usuário no banco de dados
+        const user = await db.collection("users").findOne({ _id: new ObjectId(data.id) });
+
         if (!user) {
-            return res.status(404).send("Usuário não encontrado.");
+            return res.status(404).send("Usuário não encontrado");
         }
 
-        // Armazena o usuário na requisição para os próximos middlewares
+        // Adicionando o usuário ao objeto `res.locals` para uso nas rotas
         res.locals.user = user;
 
-        next(); // Continua o fluxo
+        next(); // Passa para a próxima função ou rota
     } catch (error) {
-        console.error("Erro na validação do token:", error);
-        return res.status(500).send("Erro interno no servidor.");
+        console.error("Erro ao validar token:", error.message);
+
+        if (error.name === "JsonWebTokenError") {
+            return res.status(401).send("Token inválido");
+        }
+
+        if (error.name === "TokenExpiredError") {
+            return res.status(401).send("Token expirado");
+        }
+
+        return res.status(500).send("Erro interno do servidor");
     }
 }
